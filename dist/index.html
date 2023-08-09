@@ -7,5 +7,30 @@
     <title>Todo List</title>
     <script defer src="bundle.js"></script>
   </head>
-  <body></body>
+  <body>
+    <div class="projects"></div>
+    <div class="current-todo">
+      <button class="add">+</button>
+
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="close">&times;</span>
+            <h2>Create your new Todo!</h2>
+          </div>
+          <form action="">
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" />
+            <label for="description">Description:</label>
+            <input type="text" name="description" id="description" />
+            <label for="date">Date:</label>
+            <input type="date" name="date" id="date" />
+            <label for="time">Time:</label>
+            <input type="time" name="time" id="time" />
+            <button type="submit" id="submit">Create</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
