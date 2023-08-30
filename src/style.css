@@ -2,26 +2,34 @@
   margin: 0;
 }
 body {
-  background-color: red;
   display: flex;
 }
-
-.current-todo {
-  flex: 4 1 auto;
-  height: 100vh;
-  background-color: #fff6e0;
+button,
+p,
+h1,
+h2 {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.body {
+  height: 100vh;
+  background-image: linear-gradient(#224581, #5e89d4);
+  width: 100vw;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .add {
-  border-radius: 50%;
+  border-radius: 10px;
   border: 0px;
-  height: 50px;
-  width: 50px;
   font-size: 25px;
-  background-color: #61677a;
+  height: 50px;
+  background-color: #0d1b2a;
+  color: white;
 }
 :hover.add {
-  background-color: #272829;
+  background-color: #33658a;
 }
 
 /* MODAL */
@@ -79,10 +87,30 @@ form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   width: 200px;
-  background-color: rgb(212, 212, 212);
+  background-color: #778da9;
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
+}
+
+.grid > button {
+  background-color: #0d1b2a;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  width: 50px;
+  justify-self: center;
+}
+.high {
+  border-right: 5px solid red;
+}
+
+.medium {
+  border-right: 5px solid yellow;
+}
+
+.low {
+  border-right: 5px solid green;
 }
 
 .center-item {
@@ -90,4 +118,5 @@ form {
 }
 .span-2 {
   grid-column-start: span 2;
+  border-radius: 5px;
 }

@@ -9,6 +9,8 @@ const title = document.getElementById("title");
 const description = document.getElementById("description");
 const date = document.getElementById("date");
 const time = document.getElementById("time");
+const priorityLevel = document.getElementById("priority");
+const todoDiv = document.querySelector(".body");
 
 class App {
   #todos = [];
@@ -21,6 +23,7 @@ class App {
         modal.style.display = "none";
       }
     });
+    todoDiv.addEventListener("click", this.editOrRemove.bind(this));
   }
 
   _showForm() {
@@ -37,8 +40,15 @@ class App {
     let todoDescription = description.value;
     let todoDate = date.value;
     let todoTime = time.value;
+    let todoPriority = priorityLevel.value;
     console.log(todoTitle, todoDescription, todoDate, todoTime);
-    let todoItem = new TodoItem(todoTitle, todoDescription, todoDate, todoTime);
+    let todoItem = new TodoItem(
+      todoTitle,
+      todoDescription,
+      todoDate,
+      todoTime,
+      todoPriority
+    );
 
     console.log(todoItem);
     this.#todos.push(todoItem);
@@ -67,12 +77,13 @@ class App {
     completedBtn.textContent = "Done!";
     // Classes added
     itemContainer.classList.add("grid");
+    itemContainer.classList.add(todoItem.priority);
     itemTitle.classList.add("span-2");
     itemTitle.classList.add("center-item");
     itemDescription.classList.add("span-2");
     editBtn.classList.add("todo-btn");
     completedBtn.classList.add("todo-btn");
-    document.querySelector(".current-todo").appendChild(itemContainer);
+    document.querySelector(".body").appendChild(itemContainer);
     itemContainer.appendChild(itemTitle);
     itemContainer.appendChild(itemDescription);
     itemContainer.appendChild(itemTime);
@@ -82,8 +93,29 @@ class App {
   }
 
   editOrRemove(event) {
-    if (event.target.tagName === "Button") {
-      console.log("You clicked me!");
+    if (event.target.tagName === "BUTTON") {
+      const button = event.target;
+      const item = button.parentNode;
+      if (button.textContent === "Done!") {
+        item.remove();
+      } else if (button.textContent === "Edit") {
+        const title = item.firstElementChild;
+        const description = title.nextSibling;
+
+        title.contentEditable = true;
+        description.contentEditable = true;
+        title.style.backgroundColor = "#FFFFFF";
+        description.style.backgroundColor = "#FFFFFF";
+        button.textContent = "Save";
+      } else if (button.textContent === "Save") {
+        const title = item.firstElementChild;
+        const description = title.nextSibling;
+        title.contentEditable = false;
+        description.contentEditable = false;
+        title.style.backgroundColor = "#fff6e0";
+        description.style.backgroundColor = "#fff6e0";
+        button.textContent = "Edit";
+      }
     }
   }
 }
