@@ -15,6 +15,9 @@ const todoDiv = document.querySelector(".body");
 class App {
   #todos = [];
   constructor() {
+    //Get dat from local Storage
+    this._getLocalStorage();
+    // Attach event Handlers
     submit.addEventListener("click", this._newTodo.bind(this));
     todoBtn.addEventListener("click", this._showForm.bind(this));
     span.addEventListener("click", this._closeForm.bind(this));
@@ -41,7 +44,7 @@ class App {
     let todoDate = date.value;
     let todoTime = time.value;
     let todoPriority = priorityLevel.value;
-    console.log(todoTitle, todoDescription, todoDate, todoTime);
+
     let todoItem = new TodoItem(
       todoTitle,
       todoDescription,
@@ -59,6 +62,7 @@ class App {
     time.value = "";
     modal.style.display = "none";
     this.renderTodoItem(todoItem);
+    this.setLocalStroage();
   }
   renderTodoItem(todoItem) {
     const itemContainer = document.createElement("div");
@@ -77,6 +81,7 @@ class App {
     completedBtn.textContent = "Done!";
     // Classes added
     itemContainer.classList.add("grid");
+    itemContainer.setAttribute("id", todoItem.id);
     itemContainer.classList.add(todoItem.priority);
     itemTitle.classList.add("span-2");
     itemTitle.classList.add("center-item");
@@ -96,7 +101,17 @@ class App {
     if (event.target.tagName === "BUTTON") {
       const button = event.target;
       const item = button.parentNode;
+      const itemId = item.getAttribute("id");
       if (button.textContent === "Done!") {
+        let index;
+        for (let i = 0; i < this.#todos.length; i++) {
+          console.log(i);
+          if (this.#todos[i].id === itemId) {
+            index = i;
+          }
+        }
+        this.#todos.splice(index, 1);
+        this.setLocalStroage();
         item.remove();
       } else if (button.textContent === "Edit") {
         const title = item.firstElementChild;
@@ -117,6 +132,18 @@ class App {
         button.textContent = "Edit";
       }
     }
+  }
+  setLocalStroage() {
+    localStorage.setItem("todos", JSON.stringify(this.#todos));
+  }
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem("todos"));
+    console.log(data);
+    if (!data) return;
+
+    this.#todos = data;
+
+    this.#todos.forEach((todo) => this.renderTodoItem(todo));
   }
 }
 

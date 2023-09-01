@@ -1,5 +1,5 @@
 export class TodoItem {
-  id = (new Date() + "").slice(-5);
+  id = Date.now().toString(36) + Math.random().toString(36).substr(2);
   constructor(title, description, date, time, priority) {
     this.title = title;
     this.description = description;
